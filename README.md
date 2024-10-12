@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Prisma Installation (auth.js)
 
-## Getting Started
+    1. npm install @prisma/client @auth/prisma-adapter
+    2. npm install prisma --save-dev
 
-First, run the development server:
+    3. Environment Variable to setup database - 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Prisma Schema Setup (auth.js)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    1. npx prisma init (reamove database url in .env & use step 4 to setup databse & direct url)
+    2. Select the folder where you want to create the schema file
+    3. make a <api/db.ts> so that we can avoid creating multiple instances or new connections of Prisma Client everytime our code reloads
+    4. Guide for setup prisma with Supabase - https://supabase.com/docs/guides/database/prisma
+            + DATABASE_URL=""
+            + DIRECT_URL=""
+            <!-- get these from supabase/project/settings/configuration/Database || Transaction=DATABASE_URL || Direct=DIRECT_URL -->
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<!--     
+Next steps:
+1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
+2. Set the provider of the datasource block in schema.prisma to match your database: postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.
+3. Run prisma db pull to turn your database schema into a Prisma schema.
+4. Run prisma generate to generate the Prisma Client. You can then start querying your database.
+5. Tip: Explore how you can extend the ORM with scalable connection pooling, global caching, and real-time database events. Read: https://pris.ly/cli/beyond-orm 
+ -->
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+    Supabase Setup (auth.js)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    1. create new project in supabase
+    2. Add project name & password
+    3. Select region - Mumbai, India
+    4. What connection you want to use? - Only Connection String (for Data Api we are using Prisma)
