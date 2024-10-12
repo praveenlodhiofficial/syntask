@@ -14,6 +14,8 @@ Prisma Schema Setup (auth.js)
             + DATABASE_URL=""
             + DIRECT_URL=""
             <!-- get these from supabase/project/settings/configuration/Database || Transaction=DATABASE_URL || Direct=DIRECT_URL -->
+            
+    5. Run to push schema to supabase --- npx prisma db push 
 
 <!--     
 Next steps:
@@ -31,3 +33,4 @@ Next steps:
     2. Add project name & password
     3. Select region - Mumbai, India
     4. What connection you want to use? - Only Connection String (for Data Api we are using Prisma)
+    5. Run to push schema to supabase --- npx prisma db push 
