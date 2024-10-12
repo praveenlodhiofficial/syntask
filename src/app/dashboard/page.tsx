@@ -1,9 +1,7 @@
 import React from 'react'
-import { auth } from '../libs/auth';
-import { redirect } from 'next/navigation';
-import { requireUser } from '../libs/hooks';
+import { requireUser } from '../lib/hooks';
 
-const DashboardPage = async() => {
+const DashboardPage = async () => {
 
   const session = await requireUser();
 

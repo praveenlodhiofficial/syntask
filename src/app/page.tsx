@@ -1,11 +1,10 @@
 import React from 'react'
-import DashboardPage from './dashboard/page'
+ import { Navbar } from './components/Navbar'
 
 const HomePage = () => {
   return (
     <div>
-      Homepage
-      {/* <DashboardPage/> */}
+      <Navbar/>
     </div>
   )
 }
