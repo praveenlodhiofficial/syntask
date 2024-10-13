@@ -18,6 +18,8 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div>
+
+            {/* Dashboard Layout */}
             <div className="min-h-screen w-full grid md:grid-cols-[220px_1fr]">
 
                 {/* Sidebar for desktop */}
@@ -91,11 +93,13 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
                                         </form>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
+
                             </DropdownMenu>
 
                         </div>
                     </header>
 
+                    {/* Children Pages rendered here */}
                     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
                         {children}
                     </main>
