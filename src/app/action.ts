@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import prisma from "./lib/db";
 import { requireUser } from "./lib/hooks";
 import { onBoardingSchemaValidation } from "./lib/zodSchemas";
@@ -36,4 +37,6 @@ export async function onBoardingAction(prevState: any, formData: FormData) {
             name: submission.value.fullName,
         },
     });
+
+    return redirect('/dashboard');
 }

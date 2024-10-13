@@ -11,11 +11,30 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { requireUser } from '../lib/hooks';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 import { signOut } from '../lib/auth';
+import { redirect } from 'next/navigation';
+import prisma from '../lib/db';
+
+async function getData(userId: string) {
+    const data = await prisma.user.findUnique({
+        where: {
+            id: userId,
+        },
+        select: {
+            username: true,
+        },
+    });
+
+    if (!data?.username) {
+        return redirect("/onboarding");
+    }
+
+    return data;
+}
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
     const session = await requireUser();
-
+    const data = await getData(session.user?.id as string);
     return (
         <div>
 
