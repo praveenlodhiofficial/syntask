@@ -10,6 +10,7 @@ import { useForm } from '@conform-to/react'
 import { onBoardingAction } from '../action'
 import { onBoardingSchema } from '../lib/zodSchemas'
 import { parseWithZod } from '@conform-to/zod'
+import { SubmitButton } from '../components/SubmitButton';
 
 const onBoardingRoute = () => {
 
@@ -75,7 +76,7 @@ const onBoardingRoute = () => {
                         </CardContent>
 
                         <CardFooter>
-                            <Button className='w-full'>Submit</Button>
+                            <SubmitButton text="Submit" className='w-full' />
                         </CardFooter>
 
                     </form>

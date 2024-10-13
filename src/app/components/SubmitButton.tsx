@@ -23,6 +23,7 @@ interface iAppProps {
   className?: string;
 }
 
+// SubmitButton component is used to handle the form submission on 'onBoarding' page
 export function SubmitButton({ text, variant, className }: iAppProps) {
   const { pending } = useFormStatus();
 
@@ -45,6 +46,7 @@ export function SubmitButton({ text, variant, className }: iAppProps) {
   );
 }
 
+// GitHubAuthButton component is used to handle the GitHub authentication on 'signIn' page
 export function GitHubAuthButton() {
   const { pending } = useFormStatus();
   return (
@@ -67,6 +69,7 @@ export function GitHubAuthButton() {
   );
 }
 
+// GoogleAuthButton component is used to handle the Google authentication on 'signIn' page
 export function GoogleAuthButton() {
   const { pending } = useFormStatus();
   return (
