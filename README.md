@@ -27,10 +27,23 @@ Next steps:
  -->
 
 
-    Supabase Setup (auth.js)
+Supabase Setup (auth.js)
 
     1. create new project in supabase
     2. Add project name & password
     3. Select region - Mumbai, India
     4. What connection you want to use? - Only Connection String (for Data Api we are using Prisma)
     5. Run to push schema to supabase --- npx prisma db push 
+
+
+
+
+
+
+
+
+Nylas Setup (Node.js)
+
+    1. Install the Nylas Node.js SDK - npm install nylas   
+    2. Generate API Key & Uri in Nylas Dashboard and add it in .env file
+    3. Bring these key in 'app/lib/nylas.ts'
