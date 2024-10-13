@@ -21,6 +21,8 @@ model User {
   emailVerified DateTime?
 
   username String? @unique
+  grantId  String? 
+  grantEmail  String? 
 
   image    String?
   accounts Account[]
