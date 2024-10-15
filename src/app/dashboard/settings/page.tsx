@@ -1,8 +1,8 @@
-import { SettingForm } from '@/app/components/SettingForm'
 import prisma from '@/app/lib/db'
 import React from 'react'
 import { notFound } from 'next/navigation'
 import { requireUser } from '@/app/lib/hooks';
+import { SettingsForm } from '@/app/components/SettingForm';
 
 interface iAppProps {
     fullName: string;
@@ -33,7 +33,7 @@ const SettingsRoute = async () => {
     const session = await requireUser();
     const data = await getData(session.user?.id as string);
     return (
-        <SettingForm
+        <SettingsForm
             email={data.email}
             fullName={data.name as string}
             profileImage={data.image as string}

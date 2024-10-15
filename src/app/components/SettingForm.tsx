@@ -1,56 +1,83 @@
 "use client";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { aboutSettingsSchema } from "@/app/lib/zodSchemas";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { useFormState } from "react-dom";
+import Image from "next/image";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SettingsAction } from "../action";
+import { SubmitButton } from "./SubmitButton";
 
 interface iAppProps {
-    fullName: string;
-    email: string;
-    profileImage: string;
+  fullName: string;
+  email: string;
+
+  profileImage: string;
 }
 
-export function SettingForm({ fullName, email, profileImage }: iAppProps) {
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Settings</CardTitle>
-                <CardDescription>Manage your account settings</CardDescription>
-            </CardHeader>
+export function SettingsForm({ fullName, email, profileImage }: iAppProps) {
+  const [lastResult, action] = useFormState(SettingsAction, undefined);
+  const [currentProfileImage, setCurrentProfileImage] = useState(profileImage);
 
-            <form>
-                {/* Settings Form Content */}
-                <CardContent className="flex flex-col gap-y-4">
+  const [form, fields] = useForm({
+    // Sync the result of last submission
+    lastResult,
 
-                    {/* Full Name */}
-                    <div className="flex flex-col gap-y-2">
-                        <Label>Full Name</Label>
-                        <Input 
-                            defaultValue={fullName} 
-                            placeholder="Praveen Lodhi" 
-                            className="placeholder-gray-900" // Placeholder text color
-                        />
-                    </div>
+    // Reuse the validation logic on the client
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: aboutSettingsSchema });
+    },
 
-                    {/* Email */}
-                    <div className="flex flex-col gap-y-2">
-                        <Label>Email</Label>
-                        <Input 
-                            defaultValue={email} 
-                            placeholder="test-email@gmail.com" 
-                            className="placeholder-gray-900" // Placeholder text color
-                        />
-                    </div>
+    // Validate the form on blur event triggered
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+  });
 
-                </CardContent>
+  const handleDeleteImage = () => {
+    setCurrentProfileImage("");
+  };
 
-                {/* Settings Form Footer */}
-                <CardFooter>
-                    <Button>Submit</Button>
-                </CardFooter>
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Settings</CardTitle>
+        <CardDescription>Manage your account settings.</CardDescription>
+      </CardHeader>
+      <form noValidate id={form.id} onSubmit={form.onSubmit} action={action}>
+        <CardContent className="flex flex-col gap-y-4">
+          <div className="flex flex-col gap-y-2">
+            <Label>Full Name</Label>
+            <Input
+              name={fields.fullName.name}
+              key={fields.fullName.key}
+              placeholder="Jan Marshall"
+              defaultValue={fullName}
+            />
+            <p className="text-red-500 text-sm">{fields.fullName.errors}</p>
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <Label>Email</Label>
+            <Input disabled placeholder="Jan Marshall" defaultValue={email} />
+          </div>
 
-            </form>
-        </Card>
-    )
+        </CardContent>
+        <CardFooter>
+          <SubmitButton text="Save Changes" />
+        </CardFooter>
+      </form>
+    </Card>
+  );
 }
