@@ -21,7 +21,8 @@ const onBoardingRoute2UsingNylas = () => {
                     <Button asChild className='w-full'>
                         <Link href="/api/auth">
                             <CalendarCheck2 className='size-4 mr-2' />
-                            Connect SynTask to Nylas Account
+                            Connect Nylas Account to 
+                            Syn<span className="text-blue-400">Task</span>
                         </Link>
                     </Button>
                 </CardContent>
