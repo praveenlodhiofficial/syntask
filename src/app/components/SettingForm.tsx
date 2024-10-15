@@ -12,12 +12,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+// import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { useFormState } from "react-dom";
+import { UploadDropzone } from "@/app/lib/uploadthing";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { SettingsAction } from "../action";
 import { SubmitButton } from "./SubmitButton";
 
@@ -73,6 +76,50 @@ export function SettingsForm({ fullName, email, profileImage }: iAppProps) {
             <Input disabled placeholder="Jan Marshall" defaultValue={email} />
           </div>
 
+          <div className="grid gap-y-5">
+            <input
+              type="hidden"
+              name={fields.profileImage.name}
+              key={fields.profileImage.key}
+              value={currentProfileImage}
+            />
+            <Label>Profile Image</Label>
+            {currentProfileImage ? (
+              <div className="relative size-16">
+                <Image
+                  src={currentProfileImage}
+                  alt="Profile"
+                  width={300}
+                  height={300}
+                  className="rounded-lg size-16"
+                />
+                <Button
+                  type="button"
+                  onClick={handleDeleteImage}
+                  variant="destructive"
+                  size="icon"
+                  className="absolute -top-3 -right-3"
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+            ) : (
+              <UploadDropzone
+                endpoint="imageUploader"
+                appearance={{
+                  container: "border-muted",
+                }}
+                onClientUploadComplete={(res) => {
+                  setCurrentProfileImage(res[0].url);
+                  toast.success("Profile image uploaded");
+                }}
+                onUploadError={(error) => {
+                  toast.error(error.message);
+                }}
+              />
+            )}
+            <p className="text-red-500 text-sm">{fields.profileImage.errors}</p>
+          </div>
         </CardContent>
         <CardFooter>
           <SubmitButton text="Save Changes" />
