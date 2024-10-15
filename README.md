@@ -47,3 +47,14 @@ Nylas Setup (Node.js)
     1. Install the Nylas Node.js SDK - npm install nylas   
     2. Generate API Key & Uri in Nylas Dashboard and add it in .env file
     3. Bring these key in 'app/lib/nylas.ts'
+
+
+
+
+
+
+Uploadthing Setup - for uploading images
+
+    1. package install - npm install uploadthing @uploadthing/react
+    2. uploadthing.com - to get api key - go to uploadthing/dashboard/api-keys
+
