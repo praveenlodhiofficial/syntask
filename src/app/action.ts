@@ -5,6 +5,7 @@ import prisma from "./lib/db";
 import { requireUser } from "./lib/hooks";
 import { parseWithZod } from "@conform-to/zod";
 import { aboutSettingsSchema, onBoardingSchemaValidation } from "./lib/zodSchemas";
+import { revalidatePath } from "next/cache";
 
 export async function onBoardingAction(prevState: any, formData: FormData) {
     const session = await requireUser();
@@ -83,7 +84,43 @@ export async function onBoardingAction(prevState: any, formData: FormData) {
     return redirect('/onboarding/grant-id');
 }
 
+export async function updateAvailabilityAction(formData: FormData) {
+  const session = await requireUser();
 
+  const rawData = Object.fromEntries(formData.entries());
+  const availabilityData = Object.keys(rawData)
+    .filter((key) => key.startsWith("id-"))
+    .map((key) => {
+      const id = key.replace("id-", "");
+      return {
+        id,
+        isActive: rawData[`isActive-${id}`] === "on",
+        fromTime: rawData[`fromTime-${id}`] as string,
+        tillTime: rawData[`tillTime-${id}`] as string,
+      };
+    });
+
+  try {
+    await prisma.$transaction(
+      availabilityData.map((item) =>
+        prisma.availability.update({
+          where: { id: item.id },
+          data: {
+            isActive: item.isActive,
+            fromTime: item.fromTime,
+            tillTime: item.tillTime,
+          },
+        })
+      )
+    );
+
+    revalidatePath("/dashboard/availability");
+    return { status: "success", message: "Availability updated successfully" };
+  } catch (error) {
+    console.error("Error updating availability:", error);
+    return { status: "error", message: "Failed to update availability" };
+  }
+}
 
 
 // SettingsRoute Action 
