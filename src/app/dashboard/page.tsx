@@ -39,7 +39,12 @@ const DashboardPage = async () => {
   return (
     <>
     { data.eventTypes.length === 0 ? (
-      <EmptyState/>
+      <EmptyState
+        title='You have no Event Types'
+        description='Create your first Event Type to get started by clicking the button below.'
+        buttonText='Add Event Type'
+        href='/dashboard/new'
+      />
     ) : (
       <p>we have event types</p>
     ) }
