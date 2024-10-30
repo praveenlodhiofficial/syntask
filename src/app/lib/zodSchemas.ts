@@ -74,3 +74,14 @@ export const aboutSettingsSchema = z.object({
   
     profileImage: z.string(),
   });
+
+
+
+//   zod schema for dashboard/new(form submit event)
+export const eventTypeSchema = z.object ({
+    title: z.string().min(3).max(150),
+    duration: z.string().min(15).max(60),
+    url: z.string().min(3).max(300),
+    description: z.string().min(3).max(300),
+    videoCallSoftware: z.string().min(3)
+});

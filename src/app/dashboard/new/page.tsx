@@ -11,6 +11,12 @@ import { Textarea } from '@/components/ui/textarea'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
+type VideoCallPlatform = 'Zoom Meeting' | 'Google Meet' | 'Microsoft Teams'
+
+const NewEventRoute = () => {
+
+    const [activePlatform, setActivePlatform] = useState<VideoCallPlatform>('Google Meet')
+
     return (
         <div className='flex flw-full items-center justify-center'>
             <Card>
@@ -61,9 +67,31 @@ import React, { useState } from 'react'
                         <div className="grid gap-y-2">
                             <Label>Video Call Platform</Label>
                             <ButtonGroup>
-                               <Button>Google Meet</Button>
-                               <Button>Zoom Meeting</Button>
-                               <Button>Microsoft Teams</Button>
+
+                               <Button 
+                               type='button'
+                                className='w-full rounded-r-none' 
+                                onClick={() => setActivePlatform('Microsoft Teams')}
+                                variant={activePlatform === 'Microsoft Teams' ? 'secondary' : 'outline'}
+                                >Microsoft Teams
+                                </Button>
+
+                                <Button 
+                                type='button'
+                                className='w-full rounded-r-none rounded-l-none' 
+                                onClick={() => setActivePlatform('Google Meet')}
+                                variant={activePlatform === 'Google Meet' ? 'secondary' : 'outline'}
+                                >Google Meet
+                                </Button>
+
+                                <Button 
+                                type='button'
+                                className='w-full rounded-l-none' 
+                                onClick={() => setActivePlatform('Zoom Meeting')}
+                                variant={activePlatform === 'Zoom Meeting' ? 'secondary' : 'outline'}
+                                >Zoom Meeting
+                                </Button>
+
                             </ButtonGroup>
                         </div>
 
