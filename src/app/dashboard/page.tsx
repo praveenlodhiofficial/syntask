@@ -1,8 +1,13 @@
 import React from 'react'
-import { requireUser } from '../lib/hooks'; 
+import { requireUser } from '../lib/hooks';
 import prisma from '../lib/db';
 import { notFound } from 'next/navigation';
 import EmptyState from '../components/EmptyState';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ExternalLink, Link2, Pen, Settings, Trash, User2 } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 // fetching data from the prisma database
 async function getData(userId: string) {
@@ -19,12 +24,13 @@ async function getData(userId: string) {
           duration: true,
           description: true,
           active: true,
+          url: true,                   //added by AI for line 91 cheak in last
         },
       },
     },
   });
 
-  if(!data) {
+  if (!data) {
     return notFound();
   }
 
@@ -38,16 +44,104 @@ const DashboardPage = async () => {
 
   return (
     <>
-    { data.eventTypes.length === 0 ? (
-      <EmptyState
-        title='You have no Event Types'
-        description='Create your first Event Type to get started by clicking the button below.'
-        buttonText='Add Event Type'
-        href='/dashboard/new'
-      />
-    ) : (
-      <p>we have event types</p>
-    ) }
+
+              {/* EVENT TYPE (HEADING) */}
+              <div className="flex items-center justify-between px-2">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-semibold">Event Types</h1>
+              <p className="text-muted-background">Create & manage your event types right here.</p>
+            </div>
+
+            <div>
+              <Button asChild>
+                <Link href='/dashboard/new'>Create New Event</Link>
+              </Button>
+            </div>
+          </div>
+
+      {data.eventTypes.length === 0 ? (
+        <EmptyState
+          title='You have no Event Types'
+          description='Create your first Event Type to get started by clicking the button below.'
+          buttonText='Add Event Type'
+          href='/dashboard/new'
+        />
+      ) : (
+        <>
+
+          {/* CREATING EVENT CARDS */}
+          <div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
+            {data.eventTypes.map((item) => (
+
+              <div
+                className="shadow overflow-hidden rounded-lg border relative"
+                key={item.id}
+              >
+
+                {/* DROPDOWN SETTING ICON MENU */}
+                <div className="absolute top-2 right-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button className='bg-transparent hover:bg-transparent active:scale-125 duration-200 active:border-none transition-all'>
+                        <Settings className='size-4 invert'/>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel className='text-xl'>
+                        Event
+                        </DropdownMenuLabel>
+                      <DropdownMenuSeparator/>
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/${data.username}/${item.url}`}>
+                          <ExternalLink className='mr-2 size-4'/>
+                          Preview
+                          </Link>
+                        </DropdownMenuItem >
+                        <DropdownMenuItem asChild>
+                          <Link2 className='mr-2 size-4' />
+                          Copy
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Pen className='mr-2 size-4' /> 
+                          Edit
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator/>
+                      <DropdownMenuItem asChild>
+                          <Trash className='mr-2 size-4' /> 
+                          Trash
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+                
+                {/* USER ICON, MEETING TITLE & TIMING  */}
+                <Link href='/' className='flex items-center p-5'>
+                  <div className="flex-shrink-0">
+                    <User2 className='size-6' />
+                  </div>
+
+                  <div className="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        { item.duration } Minutes Meeting
+                      </dt>
+                      <dd className="text-lg font-medium">{item.title}</dd>
+                    </dl>
+                  </div>
+                </Link>
+
+                {/* EDIT EVENTS & SWITCH BUTTON IN CARD */}
+                <div className="px-5 py-5 justify-between items-center flex">
+                  <Switch/>
+                  <Button>Edit Events</Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </>
   )
 }
