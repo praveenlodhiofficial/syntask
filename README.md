@@ -58,3 +58,18 @@ Uploadthing Setup - for uploading images
     1. package install - npm install uploadthing @uploadthing/react
     2. uploadthing.com - to get api key - go to uploadthing/dashboard/api-keys
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- React spectrum (npm i reat-aria-components) for calender -->
+<!-- nylas for booking page -->
