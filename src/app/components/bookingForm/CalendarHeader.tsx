@@ -3,10 +3,14 @@ import { useDateFormatter } from "@react-aria/i18n";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import type { CalendarState } from "@react-stately/calendar";
 import type { DOMAttributes, FocusableElement } from "@react-types/shared";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { CalendarButton } from "./CalendarButton";
 
 export function CalendarHeader({
   state,
   calendarProps,
+  prevButtonProps,
+  nextButtonProps,
 }: {
   state: CalendarState;
   calendarProps: DOMAttributes<FocusableElement>;
@@ -35,6 +39,14 @@ export function CalendarHeader({
           {year}
         </span>
       </h2>
+      <div className="flex items-center gap-2">
+        <CalendarButton {...prevButtonProps}>
+          <ChevronLeftIcon className="size-4" />
+        </CalendarButton>
+        <CalendarButton {...nextButtonProps}>
+          <ChevronRightIcon className="size-4" />
+        </CalendarButton>
+      </div>
     </div>
   );
 }
