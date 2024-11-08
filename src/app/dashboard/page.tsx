@@ -53,7 +53,7 @@ const DashboardPage = async () => {
             </div>
 
             <div>
-              <Button asChild>
+              <Button >
                 <Link href='/dashboard/new'>Create New Event</Link>
               </Button>
             </div>
@@ -92,23 +92,23 @@ const DashboardPage = async () => {
                         </DropdownMenuLabel>
                       <DropdownMenuSeparator/>
                       <DropdownMenuGroup>
-                        <DropdownMenuItem asChild>
-                          <Link href={`/${data.username}/${item.url}`}>
+                        <DropdownMenuItem >
+                          <Link href={`/${data.username}/${item.url}`}  className='flex flex-row'>
                           <ExternalLink className='mr-2 size-4'/>
                           Preview
                           </Link>
                         </DropdownMenuItem >
-                        <DropdownMenuItem asChild>
+                        <DropdownMenuItem >
                           <Link2 className='mr-2 size-4' />
                           Copy
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
+                        <DropdownMenuItem >
                           <Pen className='mr-2 size-4' /> 
                           Edit
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                       <DropdownMenuSeparator/>
-                      <DropdownMenuItem asChild>
+                      <DropdownMenuItem >
                           <Trash className='mr-2 size-4' /> 
                           Trash
                         </DropdownMenuItem>

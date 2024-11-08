@@ -1,6 +1,7 @@
 'use client'
 
 import Calender from "@/app/components/bookingForm/Calender";
+import { RenderCalendar } from "@/app/components/bookingForm/RenderCalendar";
 import prisma from "@/app/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -59,7 +60,7 @@ export default async function BookingFormRoute({ params }: { params: { username:
                         <p className="text-sm font-medium text-muted-foreground mt-1">
                             {data.User?.name}
                         </p>
-                        <h1 className="text-xl font-semibold mt-2">{data.title}</h1>
+                        <h1 className="text-xl font-semibold py-2">{data.title}</h1>
                         <p className="text-sm text-muted-foreground font-medium">{data.description}</p>
 
                         <div className="mt-5 flex flex-col gap-3">
@@ -91,9 +92,15 @@ export default async function BookingFormRoute({ params }: { params: { username:
                         </div>
                     </div>
 
-                    <Separator orientation="vertical" className="h-full w-[1px] " />
+                    <Separator
+                        orientation="vertical"
+                        className="h-full w-[1px] "
+                    />
 
-                    <Calender />
+                    <div className="my-4 md:my-0">
+                        {/* <RenderCalendar daysofWeek={eventType.user.Availability} /> */}
+                        <RenderCalendar daysofWeek={data.User?.availability as any} />
+                    </div>
 
                 </CardContent>
             </Card>
