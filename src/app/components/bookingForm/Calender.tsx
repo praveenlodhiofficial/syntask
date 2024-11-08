@@ -4,7 +4,7 @@ import { useCalendarState } from "react-stately";
 import { CalendarHeader } from "./CalendarHeader";
 import { CalendarGrid } from "./CalendarGrid";
 
-export default function Calendar(
+export function Calendar(
   props: CalendarProps<DateValue> & {
     isDateUnavailable?: (date: DateValue) => boolean;
   }
@@ -40,4 +40,3 @@ export default function Calendar(
     </div>
   );
 }
-

@@ -9,7 +9,7 @@ import {
   today,
   parseDate,
 } from "@internationalized/date";
-import Calendar from "./Calender";
+import { Calendar } from "./Calender";
 
 interface iAppProps {
   daysofWeek: { day: string; isActive: boolean }[];
@@ -45,6 +45,12 @@ export function RenderCalendar({ daysofWeek }: iAppProps) {
     const dayOfWeek = date.toDate(getLocalTimeZone()).getDay();
     // Adjust the index to match the daysofWeek array
     const adjustedIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+    // Check if adjustedIndex is within bounds of daysofWeek array
+    if (adjustedIndex < 0 || adjustedIndex >= daysofWeek.length) {
+        return true; // or false, depending on your logic
+    }
+
     return !daysofWeek[adjustedIndex].isActive;
   };
 

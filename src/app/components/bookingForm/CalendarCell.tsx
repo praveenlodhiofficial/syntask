@@ -51,7 +51,7 @@ export function CalendarCell({
             isFocusVisible ? "group-focus:z-2 ring-gray-12 ring-offset-1" : "",
             isSelected ? "bg-primary text-white" : "",
             !isSelected && !finalIsDisabled
-              ? "hover:bg-blue-500/10 hover:border hover:border-white bg-secondary hover:scale-[110%] transition-all hover:shadow-[2px_2px_3px_rgba(255,255,255,0.6)]"
+              ? "hover:bg-blue-500/10 bg-secondary"
               : ""
           )}
         >
